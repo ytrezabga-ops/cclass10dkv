@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Website Kelas Kita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f8ff;--card:#fff;--text:#12213f;--muted:#5b6b8c;--primary:#2563eb;--primary2:#06b6d4;--line:#c9d8f5;--shadow:0 6px 20px rgba(37,99,235,.10)}
+[data-theme="dark"]{--bg:#0b1326;--card:#131f3b;--text:#e8eefc;--muted:#9fb0d3;--primary:#5b93ff;--primary2:#22d3ee;--line:#2a3b63;--shadow:0 6px 20px rgba(0,0,0,.35)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;transition:background .3s,color .3s}
+img{max-width:100%;display:block}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+section{padding:72px 20px}
+.wrap{max-width:1100px;margin:0 auto}
+h2.title{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;text-align:center;margin-bottom:8px}
+p.sub{text-align:center;color:var(--muted);margin-bottom:36px}
+.grad-text{background:linear-gradient(90deg,var(--primary),var(--primary2));-webkit-background-clip:text;background-clip:text;color:transparent}
+/* NAVBAR */
+nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-weight:800;color:var(--primary)}
+.menu{display:flex;gap:6px;list-style:none;align-items:center}
+.menu a{display:block;padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:500;font-size:.95rem}
+.menu a:hover{background:var(--bg);color:var(--primary)}
+.nav-btns{display:flex;gap:6px}
+.icon-btn{width:40px;height:40px;border-radius:12px;background:var(--bg);font-size:1.1rem}
+#burger{display:none}
+@media(max-width:1100px){
+#burger{display:block}
+.menu{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;background:var(--card);padding:10px 20px 16px;border-bottom:1px solid var(--line);display:none}
+.menu.open{display:flex}}
+/* HERO */
+.hero{position:relative;overflow:hidden;text-align:center;color:#fff;padding:96px 20px 110px;background:linear-gradient(135deg,#1d4ed8,#2563eb 50%,#06b6d4)}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero::before{width:320px;height:320px;top:-120px;left:-100px}
+.hero::after{width:240px;height:240px;bottom:-90px;right:-60px}
+.hero .in{position:relative;z-index:1;animation:rise .8s ease both}
+.hero small{display:inline-block;background:rgba(255,255,255,.18);padding:6px 16px;border-radius:99px;font-weight:700;margin-bottom:16px}
+.hero h1{font-size:clamp(2.1rem,8vw,4rem);font-weight:800;line-height:1.1;margin-bottom:12px}
+.hero p{max-width:560px;margin:0 auto 28px;opacity:.95}
+.btn{display:inline-block;background:#fff;color:#1d4ed8;padding:13px 28px;border-radius:99px;font-weight:700;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.18);transition:transform .2s}
+.btn:hover{transform:translateY(-2px) scale(1.03)}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.reveal.show{opacity:1;transform:none}
+/* GALERI */
+.slider{position:relative;overflow:hidden;border-radius:20px;box-shadow:var(--shadow);background:var(--card)}
+.track{display:flex;transition:transform .5s ease;touch-action:pan-y}
+.slide{min-width:100%;position:relative;cursor:zoom-in}
+.slide img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.cap{position:absolute;left:0;right:0;bottom:0;padding:28px 16px 14px;color:#fff;font-weight:600;background:linear-gradient(transparent,rgba(0,0,0,.65))}
+.arrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.85);color:#12213f;font-size:1.3rem;z-index:2}
+.arrow.prev{left:10px}.arrow.next{right:10px}
+.dots{position:absolute;bottom:10px;right:14px;display:flex;gap:6px;z-index:2}
+.dots button{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.55)}
+.dots button.on{background:#fff;width:22px;border-radius:9px}
+/* STATISTIK */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.stat{background:var(--card);border-radius:18px;padding:22px 12px;text-align:center;box-shadow:var(--shadow);border-top:4px solid var(--primary)}
+.stat b{display:block;font-size:2.2rem;font-weight:800;color:var(--primary)}
+.stat span{color:var(--muted);font-size:.9rem}
+/* STRUKTUR */
+.org{display:flex;flex-direction:column;align-items:center}
+.lvl{position:relative;display:flex;flex-wrap:wrap;justify-content:center;gap:14px;padding-top:26px;width:100%}
+.lvl:not(:first-child)::before{content:"";position:absolute;top:0;left:50%;width:2px;height:26px;background:var(--line)}
+.lvl-label{width:100%;text-align:center;color:var(--muted);font-size:.85rem;font-weight:600}
+.pcard{width:170px;background:var(--card);border-radius:16px;padding:14px 10px;text-align:center;box-shadow:var(--shadow);cursor:pointer;border:1px solid var(--line);transition:transform .2s}
+.pcard:hover{transform:translateY(-4px)}
+.pcard img{width:72px;height:72px;border-radius:50%;object-fit:cover;margin:0 auto 8px;border:3px solid var(--primary2)}
+.pcard b{display:block;font-size:.95rem;line-height:1.3}
+.pcard span{font-size:.8rem;color:var(--primary);font-weight:600}
+@media(max-width:480px){.pcard{width:calc(50% - 7px)}.lvl.single .pcard{width:70%}}
+/* TEMAN */
+.tools{display:flex;flex-direction:column;gap:14px;margin-bottom:24px;align-items:center}
+#search{width:100%;max-width:440px;padding:13px 18px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:var(--text);font:inherit;outline:none}
+#search:focus{border-color:var(--primary)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.filters button{padding:8px 16px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:.88rem}
+.filters button.on{background:linear-gradient(90deg,var(--primary),var(--primary2));color:#fff;border-color:transparent}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px}
+.card{position:relative;background:var(--card);border-radius:18px;padding:18px 12px;text-align:center;box-shadow:var(--shadow);cursor:pointer;transition:transform .2s;animation:rise .4s ease both}
+.card:hover{transform:translateY(-5px) scale(1.02)}
+.card img{width:88px;height:88px;border-radius:50%;object-fit:cover;margin:0 auto 10px;border:3px solid var(--line)}
+.card b{display:block;line-height:1.3}
+.card small{color:var(--muted);display:block;font-size:.8rem}
+.abs{position:absolute;top:10px;left:10px;font-size:.75rem;font-weight:700;color:var(--primary)}
+.badge{display:inline-block;margin-top:8px;padding:3px 12px;border-radius:99px;font-size:.75rem;font-weight:700}
+.b-Hadir{background:#dcf5e7;color:#1f7a45}.b-Izin{background:#fdf1d3;color:#8a6408}.b-Sakit{background:#dbe9fd;color:#1f4fa8}.b-Alpa{background:#fbe0e0;color:#a23a3a}
+[data-theme="dark"] .b-Hadir{background:#173a2a;color:#7fdca6}[data-theme="dark"] .b-Izin{background:#3d3312;color:#f0cf74}[data-theme="dark"] .b-Sakit{background:#172d52;color:#93bcff}[data-theme="dark"] .b-Alpa{background:#432020;color:#f2a0a0}
+#empty{text-align:center;color:var(--muted);display:none;padding:30px}
+/* TENTANG */
+.about{background:var(--card);border-radius:20px;padding:28px;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.about div small{color:var(--muted);display:block}
+.about div b{font-size:1.05rem}
+.about .full{grid-column:1/-1}
+/* TIMELINE */
+.tl{position:relative;max-width:760px;margin:0 auto;padding-left:26px;border-left:3px solid var(--line)}
+.tl-item{position:relative;background:var(--card);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:22px}
+.tl-item::before{content:"";position:absolute;left:-36px;top:20px;width:15px;height:15px;border-radius:50%;background:var(--primary);border:3px solid var(--bg)}
+.tl-item img{width:100%;aspect-ratio:16/8;object-fit:cover}
+.tl-item div{padding:14px 18px}
+.tl-item small{color:var(--primary);font-weight:700}
+.tl-item p{color:var(--muted);font-size:.92rem}
+/* MEDIA SOSIAL */
+.sosgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;max-width:760px;margin:0 auto}
+.sos{display:block;text-decoration:none;color:var(--text);background:var(--card);border-radius:18px;padding:22px 12px;text-align:center;box-shadow:var(--shadow);border:1px solid var(--line);transition:transform .2s}
+.sos:hover{transform:translateY(-4px)}
+.sos span{font-size:1.8rem;display:block}
+.sos b{display:block}
+.sos small{color:var(--muted);word-break:break-all}
+/* JADWAL & PIKET */
+.days{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:20px}
+.days button{padding:8px 18px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:.9rem}
+.days button.on{background:linear-gradient(90deg,var(--primary),var(--primary2));color:#fff;border-color:transparent}
+.jadwal{max-width:760px;margin:0 auto;background:var(--card);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.jrow{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);align-items:center}
+.jrow:last-child{border-bottom:0}
+.jrow small{color:var(--primary);font-weight:700}
+.jrow b{display:block}
+.jrow span{color:var(--muted);font-size:.85rem}
+.jrow.rest{background:var(--bg);color:var(--muted);font-style:italic}
+.piket{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;max-width:1000px;margin:0 auto}
+.pk{background:var(--card);border-radius:18px;padding:18px 16px;box-shadow:var(--shadow);border-top:4px solid var(--line)}
+.pk.today{border-top-color:var(--primary2);outline:2px solid var(--primary2)}
+.pk h3{color:var(--primary);margin-bottom:8px;font-size:1.05rem}
+.pk ul{list-style:none}
+.pk li{padding:5px 0;border-bottom:1px dashed var(--line);font-size:.92rem}
+.pk li:last-child{border-bottom:0}
+@media(max-width:480px){.jrow{grid-template-columns:90px 1fr;padding:12px 14px}}
+/* FOOTER */
+footer{background:linear-gradient(135deg,#1d4ed8,#0e7490);color:#fff;text-align:center;padding:36px 20px}
+footer a{color:#fff;margin:0 8px}
+/* MODAL */
+#modal{position:fixed;inset:0;background:rgba(5,12,30,.65);display:none;align-items:center;justify-content:center;padding:16px;z-index:100}
+#modal.open{display:flex}
+.box{position:relative;background:var(--card);border-radius:22px;max-width:440px;width:100%;max-height:90vh;overflow:auto;animation:rise .3s ease}
+.box.wide{max-width:900px}
+.box .x{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.45);color:#fff;z-index:3}
+.m-head{background:linear-gradient(135deg,var(--primary),var(--primary2));padding:30px 20px 60px;text-align:center;color:#fff}
+.m-head h3{font-size:1.3rem}
+.m-photo{width:130px;height:130px;border-radius:50%;object-fit:cover;border:5px solid var(--card);margin:-50px auto 0;position:relative}
+.m-body{padding:14px 22px 24px;text-align:center}
+.m-row{text-align:left;background:var(--bg);border-radius:12px;padding:10px 14px;margin-top:10px}
+.ig{color:var(--primary);font-weight:700;text-decoration:none;word-break:break-all}
+.m-row small{color:var(--muted);display:block;font-size:.75rem}
+.box.wide img.big{width:100%;max-height:80vh;object-fit:contain;background:#000}
+/* TOP */
+#top{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-size:1.3rem;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .3s;z-index:60}
+#top.show{opacity:1;pointer-events:auto}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <span class="logo">🎓 <span id="navNama"></span></span>
+    <ul class="menu" id="menu">
+      <li><a href="#beranda">Beranda</a></li>
+      <li><a href="#galeri">Galeri</a></li>
+      <li><a href="#struktur">Struktur Kelas</a></li>
+      <li><a href="#teman">Teman Sekelas</a></li>
+      <li><a href="#jadwal">Jadwal</a></li>
+      <li><a href="#piket">Piket</a></li>
+      <li><a href="#tentang">Tentang Kelas</a></li>
+      <li><a href="#sosmed">Media Sosial</a></li>
+    </ul>
+    <div class="nav-btns">
+      <button class="icon-btn" id="themeBtn" aria-label="Ganti mode">🌙</button>
+      <button class="icon-btn" id="burger" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="beranda">
+  <div class="in">
+    <small id="heroJurusan"></small>
+    <h1>WEBSITE<br><span id="heroNama"></span></h1>
+    <p id="heroDesk"></p>
+    <a class="btn" href="#teman">Lihat Teman Sekelas</a>
+  </div>
+</header>
+
+<section id="statistik"><div class="wrap reveal">
+  <h2 class="title">Statistik <span class="grad-text">Kelas</span></h2>
+  <p class="sub">Sekilas tentang kelas kita hari ini</p>
+  <div class="stats" id="stats"></div>
+</div></section>
+
+<section id="galeri"><div class="wrap reveal">
+  <h2 class="title">Galeri <span class="grad-text">Foto Kelas</span></h2>
+  <p class="sub">Geser, atau klik foto untuk memperbesar</p>
+  <div class="slider" id="slider">
+    <div class="track" id="track"></div>
+    <button class="arrow prev" id="prev" aria-label="Sebelumnya">‹</button>
+    <button class="arrow next" id="next" aria-label="Berikutnya">›</button>
+    <div class="dots" id="dots"></div>
+  </div>
+</div></section>
+
+<section id="struktur"><div class="wrap reveal">
+  <h2 class="title">Struktur <span class="grad-text">Kelas</span></h2>
+  <p class="sub">Klik kartu untuk melihat info lengkap</p>
+  <div class="org" id="org"></div>
+</div></section>
+
+<section id="teman"><div class="wrap">
+  <h2 class="title">Teman <span class="grad-text">Sekelas</span></h2>
+  <p class="sub">Klik kartu untuk melihat profil</p>
+  <div class="tools">
+    <input id="search" type="search" placeholder="🔍 Cari nama teman...">
+    <div class="filters" id="filters"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <p id="empty">Tidak ada siswa yang ditemukan.</p>
+</div></section>
+
+<section id="jadwal"><div class="wrap reveal">
+  <h2 class="title">Jadwal <span class="grad-text">Pelajaran</span></h2>
+  <p class="sub">Pilih hari untuk melihat jadwalnya</p>
+  <div class="days" id="days"></div>
+  <div class="jadwal" id="jadwalList"></div>
+</div></section>
+
+<section id="piket"><div class="wrap reveal">
+  <h2 class="title">Daftar <span class="grad-text">Piket</span></h2>
+  <p class="sub">Jangan lupa piket ya, hari ini ditandai warna</p>
+  <div class="piket" id="piketGrid"></div>
+</div></section>
+
+<section id="momen"><div class="wrap reveal">
+  <h2 class="title">Momen <span class="grad-text">Kelas</span></h2>
+  <p class="sub">Kenangan yang kita buat bersama</p>
+  <div class="tl" id="tl"></div>
+</div></section>
+
+<section id="tentang"><div class="wrap reveal">
+  <h2 class="title">Tentang <span class="grad-text">Kelas</span></h2>
+  <p class="sub">Kenalan dulu sama kelas kita</p>
+  <div class="about" id="about"></div>
+</div></section>
+
+<section id="sosmed"><div class="wrap reveal">
+  <h2 class="title">Media Sosial <span class="grad-text">Kelas</span></h2>
+  <p class="sub">Ikuti akun kelas kita</p>
+  <div class="sosgrid" id="sosgrid"></div>
+</div></section>
+
+<footer>
+  <b id="fNama"></b>
+  <p id="fSlogan"></p>
+  <p id="fMade"></p>
+  <p id="fSosmed"></p>
+</footer>
+
+<button id="top" aria-label="Kembali ke atas">↑</button>
+<div id="modal"><div class="box" id="box"></div></div>
+
+<script>
+/* =========================================================
+   1. PENGATURAN KELAS  (edit teks di sini)
+   ========================================================= */
+const KELAS = {
+  nama: "KELAS X DKV",
+  jurusan: "Desain Komunikasi Visual",
+  deskripsi: "Tempat kami belajar, berkarya, dan tertawa bareng. Ini rumah digital kelas kita!",
+  waliKelas: "Tamara Yohana, S.Pd.",
+  tahunAjaran: "2026/2027",
+  slogan: "Solid, Kreatif, Berprestasi!",
+  tentang: "Kami adalah kelas yang kreatif, kompak, dan penuh semangat",
+  pembuat: "Ananda Oktareza",
+  /* Link akun media sosial KELAS (tampil di menu "Media Sosial" dan footer).
+     nama = judul kartu | akun = teks yang tampil | url = link akun ("#" = belum diisi).
+     Tambah/hapus baris sesuka kamu. */
+  sosmed: [
+    { nama: "Instagram", akun: "@cclass10dkv", url: "https://www.instagram.com/cclass10dkv?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" },
+  ]
+};
+
+/* =========================================================
+   2. STATISTIK  (isi angka untuk menimpa hitungan otomatis,
+      atau biarkan null agar dihitung dari DATA SISWA)
+   ========================================================= */
+const STATISTIK_MANUAL = { siswa: null, laki: null, perempuan: null, pengurus: null };
+
+/* =========================================================
+   3. DATA SISWA  (edit / tambah / hapus siswa di sini)
+   gender: "L" / "P" | lahir: tanggal, bulan, tahun (contoh "15 Maret 2009")
+   instagram: username (contoh "fauzan_r") atau link akun IG; "" jika tidak ada
+   foto: isi URL foto, atau "" untuk foto placeholder otomatis
+   jabatan: "Siswa" untuk siswa biasa
+   ========================================================= */
+const dataKelas = [
+  { id: 1, nama: "Adelia Rafa Tanjung", panggilan: "Adel", gender: "P", absen: "01", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 2, nama: "Aidil Regiansyah", panggilan: "Regi", gender: "L", absen: "02", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 3, nama: "Alzena Alva Indriyani", panggilan: "Alzena", gender: "P", absen: "03", jabatan: "Sekretaris 1", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "https://www.instagram.com/alzenaalva4", foto: "image/profil/pp_zena.jpg" },
+  { id: 4, nama: "Ananda Oktareza", panggilan: "Reza", gender: "L", absen: "04", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Baca Manga dan Ngedit", citaCita: "Desainer Grafis", lahir: "15 Oktober 2010", instagram: "https://www.instagram.com/ryxi_editz", foto: "image/profil/554473619_17845860912574438_6065714851555162943_n.jpg" },
+  { id: 5, nama: "Avril Azura", panggilan: "Avril", gender: "P", absen: "05", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 6, nama: "Azhillani Tahta Zilika", panggilan: "Azhil", gender: "L", absen: "06", jabatan: "Wakil Ketua Kelas", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "15 Desember 2011", instagram: "", foto: "image/profil/pp_azil.jpg" },
+  { id: 7, nama: "Azka Dzahabiyah", panggilan: "Azka", gender: "P", absen: "07", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "https://www.instagram.com/fast_andf0rius", foto: "image/profil/pp_azka.jpg" },
+  { id: 8, nama: "Bianca Arimbi Chandra", panggilan: "Bianca", gender: "P", absen: "08", jabatan: "Bendahara 2", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 9, nama: "Bunga", panggilan: "Bunga", gender: "P", absen: "09", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 10, nama: "Cinta Aulia Agusti", panggilan: "Cinta", gender: "P", absen: "10", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 11, nama: "Daffa Hanafis Sani", panggilan: "Daffa", gender: "L", absen: "11", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 12, nama: "Fahri Aditiya", panggilan: "Fahri", gender: "L", absen: "12", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 13, nama: "Faris Arfan Anshari", panggilan: "Faris", gender: "L", absen: "13", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 14, nama: "Ibrahim Mofick", panggilan: "Ibra", gender: "L", absen: "14", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "https://www.instagram.com/ibraaa.new", foto: "image/profil/pp_ibra.jpg" },
+  { id: 15, nama: "Ilsha Imalakanaya", panggilan: "Ilsha", gender: "P", absen: "15", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 16, nama: "Ilyas Lana Firdaus", panggilan: "Ilyas", gender: "L", absen: "16", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 17, nama: "Luthfi Rahmadan", panggilan: "Luthfi", gender: "L", absen: "17", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "https://www.instagram.com/mad_an4684", foto: "image/profil/pp_lutfi.jpg" },
+  { id: 18, nama: "Meisyah Amanda", panggilan: "Meisyah", gender: "P", absen: "18", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "13 Mei 2011", instagram: "https://www.instagram.com/_esyaaa.a", foto: "image/profil/pp_meisyah.jpg" },
+  { id: 19, nama: "Muhammad Al Farezi", panggilan: "Farezi", gender: "L", absen: "19", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "22 Maret 2011", instagram: "https://www.instagram.com/rezi_sky15", foto: "image/profil/pp_farezi.jpg" },
+  { id: 20, nama: "Muhammad Rava Aditya", panggilan: "Rava", gender: "L", absen: "20", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "29 Jaunari 2011", instagram: "", foto: "" },
+  { id: 21, nama: "Muhammad Rizky", panggilan: "Rizky", gender: "L", absen: "21", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "14 Oktober 2011", instagram: "https://www.instagram.com/mhdrzky_65", foto: "image/profil/pp_rizky.jpg" },
+  { id: 22, nama: "Nabila Lubis", panggilan: "Nabila", gender: "P", absen: "22", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 23, nama: "Natasya Sanindhita", panggilan: "Natasya", gender: "P", absen: "23", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "14 Juli 2011", instagram: "https://www.instagram.com/natsyasanindhta", foto: "image/profil/pp_nata.jpg" },
+  { id: 24, nama: "Naufal Rizky Endika", panggilan: "Naufal", gender: "L", absen: "24", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "29 November 2011", instagram: "https://www.instagram.com/yahadanopal", foto: "image/profil/pp_nopal.jpg" },
+  { id: 25, nama: "Radit Dwi Aditya", panggilan: "Radit", gender: "L", absen: "25", jabatan: "Ketua Kelas", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "02 Maret 2011", instagram: "https://www.instagram.com/radit.1297", foto: "image/profil/pp_radit.jpg" },
+  { id: 26, nama: "Rafa Ale Pratama", panggilan: "Ale", gender: "L", absen: "26", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "16 Mei 2011", instagram: "", foto: "" },
+  { id: 27, nama: "Rangga Lawe", panggilan: "Lawe", gender: "L", absen: "27", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "19 Oktober 2010", instagram: "", foto: "" },
+  { id: 28, nama: "Rara Aulia Putri", panggilan: "Rara", gender: "P", absen: "28", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 29, nama: "Riskia Aini", panggilan: "Aini", gender: "P", absen: "29", jabatan: "Sekertaris 2", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "29 April 2011", instagram: "https://www.instagram.com/nun_ninun_", foto: "image/profil/pp_aini.jpg" },
+  { id: 30, nama: "Rezza Tirta Diffo", panggilan: "Rzza", gender: "L", absen: "30", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 31, nama: "Rizky Mutia Sari", panggilan: "Mutia", gender: "P", absen: "31", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 32, nama: "Sofhie Andriani", panggilan: "Sofhie", gender: "P", absen: "32", jabatan: "Bendahara 1", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 33, nama: "Syaifatul Rizky", panggilan: "Syaifatul", gender: "L", absen: "33", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 34, nama: "Umay Arjuna", panggilan: "Umay", gender: "L", absen: "34", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 35, nama: "Vikri Abiansyah", panggilan: "Abi", gender: "L", absen: "35", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 36, nama: "Zacky Mirza Abyyi", panggilan: "Mirza", gender: "L", absen: "36", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  { id: 37, nama: "Zifana Mulia Neva", panggilan: "Zifana", gender: "P", absen: "37", jabatan: "Siswa", bio: "Isi kata mutiara di sini.", hobi: "Isi hobi", citaCita: "Isi cita-cita", lahir: "", instagram: "", foto: "" },
+  
+];
+
+/* =========================================================
+   4. DATA PENGURUS  (urutan dari atas ke bawah).
+   siswaId = id di DATA SISWA, nama & foto otomatis diambil dari sana
+   Tiap level berisi orang. Foto kosong = placeholder.
+   ========================================================= */
+const dataPengurus = [
+  { level: "Wali Kelas", orang: [{ nama: "Tamara Yohana, S.pd ", jabatan: "Wali Kelas", foto: "image/profil/pp_tamara.jpg", info: "Guru pembimbing kelas kami." }] },
+  { level: "Ketua Kelas", orang: [{ nama: "Radit Dwi Aditiya", foto: "image/profil/pp_radit.jpg", jabatan: "Ketua Kelas", info: "Memimpin kelas dan menjadi penghubung dengan wali kelas." }] },
+  { level: "Wakil Ketua", orang: [{ nama: "Azhillani Tahta Zilika", foto: "image/profil/pp_azil.jpg", jabatan: "Wakil Ketua", info: "Membantu ketua dan menggantikan saat ketua berhalangan." }] },
+  { level: "Sekretaris", orang: [
+    { nama: "Alzena Alva Indriyani", foto: "image/profil/pp_zena.jpg", jabatan: "Sekretaris 1", info: "Mencatat notulen dan mengurus administrasi kelas." },
+    { nama: "Riskia Aini", foto: "image/profil/pp_aini.jpg", jabatan: "Sekretaris 2", info: "Membantu Sekretaris 1 mengurus catatan kelas." }] },
+  { level: "Bendahara", orang: [
+    { nama: "Sofhie Andriani", foto: "image/profil/pp_sofhie.jpg", jabatan: "Bendahara 1", info: "Mengelola uang kas kelas." },
+    { nama: "Bianca Arimbi Chandra", foto: "", jabatan: "Bendahara 2", info: "Membantu Bendahara 1 mencatat kas." }] }
+];
+
+/* =========================================================
+   5. GALERI  (ganti src dengan URL foto kamu)
+   ========================================================= */
+const galeri = [
+  { src: "image/mpls/747613205_18052343810567923_6417257652433771186_n.webp", caption: "Foto bersama di halaman sekolah" },
+  { src: "image/mpls/image-enhancer-1790690318753.png", caption: "Kegiatan Sosialisasi" },
+  { src: "image/mpls/barudak dkv iniidkv.webp", caption: "The Boys" },
+  { src: "", caption: "Belajar bareng sepulang sekolah" }
+];
+
+/* =========================================================
+   6. TIMELINE / MOMEN KELAS
+   ========================================================= */
+const timeline = [
+  { judul: "MPLS", tanggal: "15 Juli 2026", deskripsi: "Awal perkenalan kami sebagai keluarga baru.", foto: "image/mpls/747613205_18052343810567923_6417257652433771186_n.webp" },
+  { judul: "Hari Pertama Sekolah", tanggal: "20 Juli 2026", deskripsi: "Gugup, semangat, dan penuh cerita.", foto: "" },
+  { judul: "Lomba Kelas", tanggal: "17 Agustus 2026", deskripsi: "Kompak bersama di lomba 17-an.", foto: "image/mpls/HUT RI KE 81day one.webp" },
+  { judul: "Belajar Bersama", tanggal: "10 September 2026", deskripsi: "Kegiatan Sosialisasi.", foto: "image/mpls/image-enhancer-1790690318753.png" },
+  { judul: "Boy", tanggal: "05 Agustus 2026", deskripsi: "Tampan dan Berani.", foto: "image/mpls/barudak dkv iniidkv.webp" }
+];
+
+/* =========================================================
+   7. JADWAL PELAJARAN  (edit mapel & jam sesuai kelasmu)
+   jam = teks jam | mapel = nama pelajaran | guru = boleh "" | istirahat: true untuk baris istirahat
+   ========================================================= */
+const jadwal = {
+  Senin: [
+    { jam: "07.15 - 07.50", mapel: "Upacara Bendera", guru: "" },
+    { jam: "07.50 - 09.35", mapel: "Kej. DKV 1", guru: "" },
+    { jam: "09.35 - 09.50", mapel: "Istirahat", istirahat: true },
+    { jam: "09.50 - 11.30", mapel: "PAIDBP", guru: "" },
+    { jam: "11.30 - 12.00", mapel: "Kej. DKV 1", guru: "" },
+    { jam: "12.00 - 12.35", mapel: "Istirahat", istirahat: true },
+    { jam: "12.35 - 14.15", mapel: "Kej. DKV 1", guru: "" },
+  ],
+  Selasa: [
+    {jam: "0{7.15 - 08.25", mapel: "Seni Tari", guru: "" },
+    { jam: "08.25 - 09.35", mapel: "IPAS", guru: "" },
+    { jam: "09.35 - 09.50", mapel: "Istirahat", istirahat: true },
+    { jam: "09.50 - 11.00", mapel: "Sejarah Indo", guru: "" },
+    { jam: "11.00 - 12.00", mapel: "Matematika", guru: "" },
+    { jam: "12.00 - 12.35", mapel: "Istirahat", istirahat: true },
+    { jam: "12.35 - 13.45", mapel: "Matematika", guru: "" },
+  ],
+  Rabu: [
+    { jam: "07.15 - 09.35", mapel: "Kej. DKV 2", guru: "" },
+    { jam: "09.35 - 09.50", mapel: "Istirahat", istirahat: true },
+    { jam: "09.50 - 11.00", mapel: "Conversation", guru: "" },
+    { jam: "11.00 - 12.00", mapel: "B.Indonesia", guru: "" },
+    { jam: "12.00 - 12.35", mapel: "Istirahat", istirahat: true },
+    { jam: "12.35 - 13.45", mapel: "B.Indonesia", guru: "" },
+  ],
+  Kamis: [
+    { jam: "07.15 - 09.35", mapel: "IPAS", guru: "" },
+    { jam: "09.35 - 09.50", mapel: "Istirahat", istirahat: true },
+    { jam: "09.50 - 11.00", mapel: "Pend.Pancasila", guru: "" },
+    { jam: "11.00 - 12.00", mapel: "B.Inggris", guru: "" },
+    { jam: "12.00 - 12.35", mapel: "Istirahat", istirahat: true },
+    { jam: "12.35 - 13.45", mapel: "B.Inggris", guru: "" },
+  ],
+  Jumat: [
+    { jam: "07.15 - 09.15", mapel: "Informatika", guru: "" },
+    { jam: "09.15 - 09.45", mapel: "KKA", guru: ""},
+    { jam: "09.45 - 10.00", mapel: "Istirahat", istirahat: true },
+    { jam: "10.00 - 10.30", mapel: "Kej. DKV 2", guru: "" },
+    { jam: "10.30 - 12.00", mapel: "PJOK", guru: "" },
+  ]
+};
+
+/* =========================================================
+   8. DAFTAR PIKET  (isi dengan nama panggilan / nama lengkap)
+   ========================================================= */
+const piket = {
+  Senin:  ["Adelia Rafa Tanjung", "Avril Azura", "Ilsha Imalakanaya", "Bunga", "Fahri Aditya", "Ananda Oktareza", "Lutfi Ramadhan", "Muhammad Rizky"],
+  Selasa: ["Rara Aulia", "Rizky Mutia Sari", "Nabila Lubis", "Rezza Tirta Diffo", "Daffa Hanafis Sani", "Umay Arjuna", "Ibrahim Mofick"],
+  Rabu:   ["Sofhie Andriani", "Bianca Arimbi Chandra", "Natasya Sanindhita", "Aidil Regiansyah", "Ilyas Lana Firdaus", "Naufal Rizqy Endika", "Rangga Lawe"],
+  Kamis:  ["Zifana Mulia Neva", "Cinta Aulia Agusti", "Meisyah Amanda", "Vikri Abiansyah", "Azhillani Tahta Zilika", "Muhammad Al Farezi", "Faris Arfan Anshari", "Rafa Ale Pratama"],
+  Jumat:  ["Alzena Alva Indriyani", "Reskia Aini", "Azka Dzahabiyah", "Radit Dwi Aditiya", "Zacky Mirza Abyyi", "Muhammad Rava Aditya", "Syaifatul Risky"]
+};
+
+/* =========================================================
+   KODE PROGRAM (tidak perlu diedit)
+   ========================================================= */
+const $ = (s) => document.querySelector(s);
+const STATUS = ["Hadir", "Izin", "Sakit", "Alpa"];
+
+/* Foto placeholder otomatis (SVG) bila URL kosong */
+function placeholder(teks, w, h, i) {
+  const hue = (i * 47 + 200) % 360;
+  const inisial = w === h ? teks.split(" ").map(k => k[0]).slice(0, 2).join("").toUpperCase() : teks;
+  const fs = w === h ? w / 2.6 : 34;
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='hsl(${hue},75%,55%)'/><stop offset='1' stop-color='hsl(${hue + 40},80%,70%)'/></linearGradient></defs><rect width='100%' height='100%' fill='url(#g)'/><text x='50%' y='50%' fill='white' font-family='sans-serif' font-weight='700' font-size='${fs}' text-anchor='middle' dominant-baseline='central'>${inisial.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</text></svg>`;
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
+const foto = (url, teks, i, w = 300, h = 300) => url || placeholder(teks, w, h, i);
+const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+/* Baris Instagram di modal: terima username atau link akun */
+function barisIG(v) {
+  v = (v || "").trim(); if (!v) return "";
+  const url = /^https?:\/\//i.test(v) ? v : "https://instagram.com/" + encodeURIComponent(v.replace(/^@/, ""));
+  const nama = url.replace(/[?#].*$/, "").replace(/\/+$/, "").split("/").pop();
+  return `<div class="m-row"><small>Instagram</small><a class="ig" href="${esc(url)}" target="_blank" rel="noopener noreferrer">📷 @${esc(nama)}</a></div>`;
+}
+
+/* Modal */
+const modal = $("#modal"), box = $("#box");
+function bukaModal(html, wide) {
+  box.className = "box" + (wide ? " wide" : "");
+  box.innerHTML = `<button class="x" aria-label="Tutup">✕</button>` + html;
+  modal.classList.add("open");
+  box.querySelector(".x").onclick = tutupModal;
+}
+function tutupModal() { modal.classList.remove("open"); }
+modal.addEventListener("click", (e) => { if (e.target === modal) tutupModal(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") tutupModal(); });
+
+/* Teks umum */
+document.title = "Website " + KELAS.nama;
+$("#navNama").textContent = KELAS.nama;
+$("#heroNama").textContent = KELAS.nama;
+$("#heroJurusan").textContent = KELAS.jurusan;
+$("#heroDesk").textContent = KELAS.deskripsi;
+$("#fNama").textContent = KELAS.nama + " · " + KELAS.jurusan;
+$("#fSlogan").textContent = KELAS.slogan;
+$("#fMade").textContent = `© ${new Date().getFullYear()} · Made with ❤️ by ${KELAS.pembuat}`;
+$("#fSosmed").innerHTML = KELAS.sosmed.map(s => `<a href="${esc(s.url)}">${esc(s.nama)}</a>`).join("");
+
+/* Media sosial kelas */
+const IKON = { instagram: "📷", tiktok: "🎵", youtube: "▶️", facebook: "👍", whatsapp: "💬", telegram: "✈️", x: "🐦" };
+$("#sosgrid").innerHTML = KELAS.sosmed.map(s => {
+  const ok = s.url && s.url !== "#";
+  return `<a class="sos" href="${esc(s.url || "#")}"${ok ? ' target="_blank" rel="noopener noreferrer"' : ""}><span>${IKON[s.nama.toLowerCase()] || "🔗"}</span><b>${esc(s.nama)}</b><small>${esc(s.akun || "")}</small></a>`;
+}).join("");
+
+/* Tentang */
+$("#about").innerHTML = [
+  ["Nama Kelas", KELAS.nama], ["Jurusan", KELAS.jurusan], ["Wali Kelas", KELAS.waliKelas],
+  ["Tahun Ajaran", KELAS.tahunAjaran], ["Slogan", KELAS.slogan]
+].map(([k, v]) => `<div><small>${k}</small><b>${esc(v)}</b></div>`).join("") +
+  `<div class="full"><small>Deskripsi</small><b style="font-weight:500">${esc(KELAS.tentang)}</b></div>`;
+
+/* Statistik */
+function renderStatistik() {
+  const auto = {
+    siswa: dataKelas.length,
+    laki: dataKelas.filter(s => s.gender === "L").length,
+    perempuan: dataKelas.filter(s => s.gender === "P").length,
+    pengurus: dataKelas.filter(s => s.jabatan !== "Siswa").length
+  };
+  const v = (k) => STATISTIK_MANUAL[k] ?? auto[k];
+  $("#stats").innerHTML = [["👥", "Jumlah Siswa", "siswa"], ["👦", "Laki-laki", "laki"], ["👧", "Perempuan", "perempuan"], ["⭐", "Pengurus", "pengurus"]]
+    .map(([i, l, k]) => `<div class="stat"><div>${i}</div><b>${v(k)}</b><span>${l}</span></div>`).join("");
+}
+renderStatistik();
+
+/* Galeri slider */
+let idx = 0, timer;
+const track = $("#track"), dots = $("#dots");
+track.innerHTML = galeri.map((g, i) => `<div class="slide" data-i="${i}"><img src="${foto(g.src, g.caption, i, 900, 506)}" alt="${esc(g.caption)}" loading="lazy"><div class="cap">${esc(g.caption)}</div></div>`).join("");
+dots.innerHTML = galeri.map((_, i) => `<button data-d="${i}" aria-label="Foto ${i + 1}"></button>`).join("");
+function pindah(n) {
+  idx = (n + galeri.length) % galeri.length;
+  track.style.transform = `translateX(-${idx * 100}%)`;
+  [...dots.children].forEach((d, i) => d.classList.toggle("on", i === idx));
+}
+function mulaiAuto() { clearInterval(timer); timer = setInterval(() => pindah(idx + 1), 4000); }
+$("#prev").onclick = () => { pindah(idx - 1); mulaiAuto(); };
+$("#next").onclick = () => { pindah(idx + 1); mulaiAuto(); };
+dots.onclick = (e) => { if (e.target.dataset.d) { pindah(+e.target.dataset.d); mulaiAuto(); } };
+const slider = $("#slider");
+slider.addEventListener("mouseenter", () => clearInterval(timer));
+slider.addEventListener("mouseleave", mulaiAuto);
+let sx = null, geser = false;
+slider.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; clearInterval(timer); }, { passive: true });
+slider.addEventListener("touchend", (e) => {
+  const dx = e.changedTouches[0].clientX - sx;
+  if (Math.abs(dx) > 40) { pindah(idx + (dx < 0 ? 1 : -1)); geser = true; setTimeout(() => geser = false, 300); }
+  mulaiAuto();
+});
+track.addEventListener("click", (e) => {
+  const s = e.target.closest(".slide"); if (!s || geser) return;
+  const g = galeri[+s.dataset.i];
+  bukaModal(`<img class="big" src="${foto(g.src, g.caption, +s.dataset.i, 900, 506)}" alt=""><div class="m-body"><b>${esc(g.caption)}</b></div>`, true);
+});
+pindah(0); mulaiAuto();
+
+/* Struktur organisasi */
+const jadi = (o) => { const x = dataKelas.find(k => k.id === o.siswaId); return x ? { ...o, nama: x.nama, foto: x.foto, instagram: x.instagram } : o; };
+function renderOrg() {
+  $("#org").innerHTML = dataPengurus.map((lv, li) => `
+  <div class="lvl ${lv.orang.length === 1 ? "single" : ""}">
+    ${lv.orang.map(jadi).map((o, oi) => `<div class="pcard" data-l="${li}" data-o="${oi}"><img src="${foto(o.foto, o.nama, li * 5 + oi)}" alt="${esc(o.nama)}" loading="lazy"><b>${esc(o.nama)}</b><span>${esc(o.jabatan)}</span></div>`).join("")}
+  </div>`).join("");
+}
+renderOrg();
+$("#org").addEventListener("click", (e) => {
+  const c = e.target.closest(".pcard"); if (!c) return;
+  const raw = dataPengurus[+c.dataset.l].orang[+c.dataset.o];
+  const o = jadi(raw), i = +c.dataset.l * 5 + +c.dataset.o;
+  bukaModal(`<div class="m-head"><h3>${esc(o.jabatan)}</h3></div><img class="m-photo" src="${foto(o.foto, o.nama, i)}" alt=""><div class="m-body"><h3>${esc(o.nama)}</h3><div class="m-row"><small>Tugas / Info</small>${esc(o.info)}</div>${barisIG(o.instagram)}</div>`);
+});
+
+/* Teman sekelas: filter + search */
+const FILTERS = [["Semua", () => true], ["Laki-laki", s => s.gender === "L"], ["Perempuan", s => s.gender === "P"], ["Pengurus", s => s.jabatan !== "Siswa"]];
+let filterAktif = 0;
+$("#filters").innerHTML = FILTERS.map((f, i) => `<button data-f="${i}" class="${i === 0 ? "on" : ""}">${f[0]}</button>`).join("");
+function renderSiswa() {
+  const q = $("#search").value.trim().toLowerCase();
+  const hasil = dataKelas.filter(s => FILTERS[filterAktif][1](s) && (s.nama + " " + s.panggilan).toLowerCase().includes(q));
+  $("#grid").innerHTML = hasil.map(s => `
+    <div class="card" data-id="${s.id}">
+      <span class="abs">#${esc(s.absen)}</span>
+      <img src="${foto(s.foto, s.nama, s.id)}" alt="${esc(s.nama)}" loading="lazy">
+      <b>${esc(s.panggilan)}</b><small>${esc(s.jabatan)}</small>
+    </div>`).join("");
+  $("#empty").style.display = hasil.length ? "none" : "block";
+}
+$("#search").addEventListener("input", renderSiswa);
+$("#filters").addEventListener("click", (e) => {
+  if (!e.target.dataset.f) return;
+  filterAktif = +e.target.dataset.f;
+  document.querySelectorAll("#filters button").forEach(b => b.classList.toggle("on", b === e.target));
+  renderSiswa();
+});
+$("#grid").addEventListener("click", (e) => {
+  const c = e.target.closest(".card"); if (!c) return;
+  const s = dataKelas.find(x => x.id === +c.dataset.id);
+  bukaModal(`
+    <div class="m-head"><h3>${esc(s.jabatan)}</h3></div>
+    <img class="m-photo" src="${foto(s.foto, s.nama, s.id)}" alt="">
+    <div class="m-body">
+      <h3>${esc(s.nama)}</h3>
+      <div class="m-row"><small>Nama panggilan · No. absen</small>${esc(s.panggilan)} · ${esc(s.absen)}</div>
+      <div class="m-row"><small>Tanggal lahir</small>${esc(s.lahir)}</div>
+      <div class="m-row"><small>Bio / kata mutiara</small>“${esc(s.bio)}”</div>
+      <div class="m-row"><small>Hobi</small>${esc(s.hobi)}</div>
+      <div class="m-row"><small>Cita-cita</small>${esc(s.citaCita)}</div>
+      ${barisIG(s.instagram)}
+    </div>`);
+});
+renderSiswa();
+
+/* Timeline */
+$("#tl").innerHTML = timeline.map((t, i) => `
+  <div class="tl-item"><img src="${foto(t.foto, t.judul, i + 20, 800, 400)}" alt="${esc(t.judul)}" loading="lazy">
+  <div><small>${esc(t.tanggal)}</small><h3>${esc(t.judul)}</h3><p>${esc(t.deskripsi)}</p></div></div>`).join("");
+
+/* Jadwal pelajaran + piket */
+const HARI = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
+const hariIni = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"][new Date().getDay()];
+let hariAktif = HARI.includes(hariIni) ? hariIni : "Senin";
+
+function renderJadwal() {
+  $("#days").innerHTML = HARI.map(h => `<button data-h="${h}" class="${h === hariAktif ? "on" : ""}">${h}${h === hariIni ? " •" : ""}</button>`).join("");
+  $("#jadwalList").innerHTML = (jadwal[hariAktif] || []).map(j => j.istirahat
+    ? `<div class="jrow rest"><small>${esc(j.jam)}</small><div>${esc(j.mapel)}</div></div>`
+    : `<div class="jrow"><small>${esc(j.jam)}</small><div><b>${esc(j.mapel)}</b>${j.guru ? `<span>${esc(j.guru)}</span>` : ""}</div></div>`
+  ).join("") || `<div class="jrow rest"><div>Belum ada jadwal.</div></div>`;
+}
+$("#days").addEventListener("click", (e) => {
+  if (!e.target.dataset.h) return;
+  hariAktif = e.target.dataset.h; renderJadwal();
+});
+renderJadwal();
+
+$("#piketGrid").innerHTML = HARI.map(h => `
+  <div class="pk ${h === hariIni ? "today" : ""}">
+    <h3>${h}${h === hariIni ? " (hari ini)" : ""}</h3>
+    <ul>${(piket[h] || []).map(n => `<li>🧹 ${esc(n)}</li>`).join("")}</ul>
+  </div>`).join("");
+
+/* Navbar mobile */
+$("#burger").onclick = () => $("#menu").classList.toggle("open");
+$("#menu").onclick = (e) => { if (e.target.tagName === "A") $("#menu").classList.remove("open"); };
+
+/* Dark mode (disimpan di localStorage) */
+function setTema(t) {
+  document.documentElement.setAttribute("data-theme", t);
+  $("#themeBtn").textContent = t === "dark" ? "☀️" : "🌙";
+}
+let tema = "light";
+try { tema = localStorage.getItem("temaKelas") || "light"; } catch (e) {}
+setTema(tema);
+$("#themeBtn").onclick = () => {
+  tema = tema === "dark" ? "light" : "dark"; setTema(tema);
+  try { localStorage.setItem("temaKelas", tema); } catch (e) {}
+};
+
+/* Back to top */
+window.addEventListener("scroll", () => $("#top").classList.toggle("show", scrollY > 400), { passive: true });
+$("#top").onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+/* Animasi muncul saat scroll */
+const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); } }), { threshold: .1 });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+</script>
+</body>
+</html>
